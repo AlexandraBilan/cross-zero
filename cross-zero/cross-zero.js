@@ -37,7 +37,7 @@ function clear()
     {
       clear_td[i].innerHTML="";
      }
-    document.getElementById('rezult').innerHTML = "";
+    document.getElementById('result').innerHTML = "";
     document.getElementById('win1').style.display = "none";
     document.getElementById('win2').style.display = "none";
     start();
@@ -51,56 +51,56 @@ function check()
        if(rows[0].cells[0].textContent === rows[0].cells[1].textContent && rows[0].cells[1].textContent === rows[0].cells[2].textContent && rows[0].cells[0].textContent != "")
                 {
                     document.getElementById('win2').style = "display: block; left: 125px; top: 95px;";
-                    document.getElementById('rezult').innerHTML = winner + " " +rows[0].cells[0].textContent;
+                    document.getElementById('result').innerHTML = winner + " " +rows[0].cells[0].textContent;
                     table.onclick=function (){return false};
                     return;
                 }
        else if(rows[1].cells[0].textContent === rows[1].cells[1].textContent && rows[1].cells[1].textContent === rows[1].cells[2].textContent && rows[1].cells[0].textContent != "")
                 {
                    document.getElementById('win2').style = "display: block; left: 125px; top: 155px;";
-                    document.getElementById('rezult').innerHTML = winner + " " +rows[1].cells[0].textContent;
+                    document.getElementById('result').innerHTML = winner + " " +rows[1].cells[0].textContent;
                     table.onclick=function (){return false};
                     return;
                 }    
       else if(rows[2].cells[0].textContent === rows[2].cells[1].textContent && rows[2].cells[1].textContent === rows[2].cells[2].textContent && rows[2].cells[0].textContent != "")
                 {
                    document.getElementById('win2').style = "display: block; left: 125px; top: 215px;";
-                   document.getElementById('rezult').innerHTML = winner + " " +rows[2].cells[0].textContent;
+                   document.getElementById('result').innerHTML = winner + " " +rows[2].cells[0].textContent;
                     table.onclick=function (){return false};
                    return;
                 } 
      else if(rows[0].cells[0].textContent === rows[1].cells[0].textContent && rows[1].cells[0].textContent === rows[2].cells[0].textContent && rows[0].cells[0].textContent != "")
                 {
                    document.getElementById('win2').style = "display: block; transform: rotate(90deg); top: 140px; left: 76px;"; 
-                   document.getElementById('rezult').innerHTML = winner + " " +rows[0].cells[0].textContent;
+                   document.getElementById('result').innerHTML = winner + " " +rows[0].cells[0].textContent;
                     table.onclick=function (){return false};
                     return;
                 } 
       else if(rows[0].cells[1].textContent === rows[1].cells[1].textContent && rows[1].cells[1].textContent === rows[2].cells[1].textContent && rows[0].cells[1].textContent != "")
                 {
                      document.getElementById('win2').style = "display: block; transform: rotate(90deg); top: 140px; left: 130px;"; 
-                    document.getElementById('rezult').innerHTML = winner + " " +rows[0].cells[1].textContent;
+                    document.getElementById('result').innerHTML = winner + " " +rows[0].cells[1].textContent;
                     table.onclick=function (){return false};
                     return;
                 } 
       else if(rows[0].cells[2].textContent === rows[1].cells[2].textContent && rows[1].cells[2].textContent === rows[2].cells[2].textContent && rows[0].cells[2].textContent != "")
                 {
                     document.getElementById('win2').style = "display: block; transform: rotate(90deg); top: 140px; left: 190px;"; 
-                  document.getElementById('rezult').innerHTML = winner + " " +rows[0].cells[2].textContent;
+                  document.getElementById('result').innerHTML = winner + " " +rows[0].cells[2].textContent;
                     table.onclick=function (){return false};
                     return;
                 } 
       else if(rows[0].cells[0].textContent === rows[1].cells[1].textContent && rows[1].cells[1].textContent === rows[2].cells[2].textContent && rows[0].cells[0].textContent != "")
                 {
                      document.getElementById('win1').style = "display: block;  transform: rotate(45deg); left: 105px; top: 155px" 
-                    document.getElementById('rezult').innerHTML = winner + " " +rows[0].cells[0].textContent;
+                    document.getElementById('result').innerHTML = winner + " " +rows[0].cells[0].textContent;
                     table.onclick=function (){return false};
                     return;
                 } 
       else if(rows[0].cells[2].textContent === rows[1].cells[1].textContent && rows[1].cells[1].textContent === rows[2].cells[0].textContent && rows[0].cells[2].textContent != "")
                 {
                     document.getElementById('win1').style = "display: block;  transform: rotate(132deg); left: 95px; top: 155px;"; 
-                    document.getElementById('rezult').innerHTML = winner + " " +rows[0].cells[2].textContent;
+                    document.getElementById('result').innerHTML = winner + " " +rows[0].cells[2].textContent;
                     table.onclick=function (){return false};
                     return;
                 } 
@@ -112,8 +112,8 @@ function check()
         {
             counter++;
             if (counter === 9) {
-                document.getElementById('rezult').style = " margin-left: 190px;";
-                document.getElementById('rezult').innerHTML = "Ничья :)";
+                document.getElementById('result').style = " margin-left: 190px;";
+                document.getElementById('result').innerHTML = "Ничья :)";
             }
         }
     }

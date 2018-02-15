@@ -29,6 +29,7 @@ table tr, table td
     text-align: center;
     cursor: pointer;
     font-family: SouthPark_Cyr;
+    -moz-font-family: Arial, sans-serif;
 }
 .line
 {
@@ -63,7 +64,7 @@ input
     padding: 10px;
     font-family: SouthPark_Cyr;
 }
-#rezult
+#result
 {
     font-family: SouthPark_Cyr;
     font-size: 20px;

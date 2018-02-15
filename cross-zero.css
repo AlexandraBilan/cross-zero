@@ -1,11 +1,11 @@
 @font-face {
   font-family: SouthPark_Cyr;
   src: local("Scriptorama"),
-       url(11535.ttf);
+       url(cross-zero/11535.ttf);
 }
 body
 {
-    background: url(bg-cross.jpg);
+    background: url(cross-zero/bg-cross.jpg);
     margin: 0;
     padding: 0;
 }

@@ -1,27 +1,28 @@
 @font-face {
-  font-family: SouthPark_Cyr;
-  src: local("Scriptorama"),
-       url(cross-zero/11535.ttf);
+    font-family: SouthPark_Cyr;
+    src: local("Scriptorama"),
+    url(11535.ttf);
 }
-body
-{
-    background: url(cross-zero/bg-cross.jpg);
+
+body {
+    background: url(bg-cross.jpg);
     margin: 0;
     padding: 0;
 }
-h1
-{
+
+h1 {
     font-family: SouthPark_Cyr;
     display: inline-block;
     margin-left: 100px;
 }
-table{
+
+table {
     position: relative;
     left: 150px;
 }
 
-table tr, table td
-{
+table tr,
+table td {
     width: 50px;
     height: 50px;
     padding: 5px;
@@ -29,50 +30,98 @@ table tr, table td
     text-align: center;
     cursor: pointer;
     font-family: SouthPark_Cyr;
-    -moz-font-family: Arial, sans-serif;
 }
-.line
-{
+
+.line {
     position: absolute;
 }
-.line1
-{
+
+.line1 {
     left: 150px;
     top: 125px;
 }
 
-.line2
-{
+.line2 {
     left: 145px;
     top: 184px;
 }
 
-.line3
-{
+.line3 {
     left: 199px;
     top: 72px;
 }
-.line4
-{
+
+.line4 {
     left: 260px;
-    top:  75px;
+    top: 75px;
 }
 
-input
-{
+input {
     margin: 60px 0px 10px 180px;
     padding: 10px;
     font-family: SouthPark_Cyr;
 }
-#result
-{
+
+#rezult {
     font-family: SouthPark_Cyr;
     font-size: 20px;
     margin-left: 180px;
 }
 
-#win1, #win2
-{
+#win1,
+#win2,
+#win3,
+#win4,
+#win5,
+#win6,
+#win7,
+#win8,
+#win0 {
     position: absolute;
     display: none;
+}
+
+#win0 {
+    left: 125px;
+    top: 95px;
+}
+
+#win1 {
+    left: 125px;
+    top: 155px;
+}
+
+#win2 {
+    left: 125px;
+    top: 215px;
+}
+
+#win3 {
+    transform: rotate(90deg);
+    top: 140px;
+    left: 76px;
+}
+
+#win4 {
+    transform: rotate(90deg);
+    top: 140px;
+    left: 130px;
+}
+
+#win5 {
+    transform: rotate(90deg);
+    top: 140px;
+    left: 190px;
+}
+
+#win6 {
+    transform: rotate(45deg);
+    left: 105px;
+    top: 155px;
+}
+
+#win7 {
+    transform: rotate(132deg);
+    left: 95px;
+    top: 155px;
 }

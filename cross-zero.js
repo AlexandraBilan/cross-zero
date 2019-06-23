@@ -1,285 +1,170 @@
 var table = document.getElementById("table");
-var flag = true;
-var kind_of_game = true;
-var bot_winner = true;
-var clear_td = document.getElementsByTagName("td");
-var bot_win_flag = true;
-var win_cod = ['012', '345', '678', '036', '147', '258', '048', '642'];
-var rows = table.rows;
-one.addEventListener('click', start_one_man);
-two.addEventListener('click', start_two_man);
+var all_td = document.getElementsByTagName("td");
+var win_code = ['012', '345', '678', '036', '147', '258', '048', '642'];
 
-function start_one_man() {
-    for (var i = 0; i < clear_td.length; i++) {
-        clear_td[i].innerHTML = "";
+
+function Player(symbol){
+    this.symbol = symbol;
+    this.move= '';
+    this.type_player= '';
+}
+
+function Turn(player1, player2){
+    this.player1 = player1;
+    this.player2 = player2;
+    let current_player = '';
+    this.next = function() {
+        if(current_player == '' || current_player == this.player2)
+        {
+            current_player = this.player1;
+        }
+        else if(current_player == this.player1){
+            current_player = this.player2;
+        }
+        return current_player;
     }
-    kind_of_game = true;
-    document.getElementById('turn').style.display = 'block';
-    document.getElementById('kind_one').style.display = 'block';
-    document.getElementById('kind_two').style.display = 'none';
-    table.onclick = function (event) {
-        var target = event.target;
-        if (target.tagName != 'TD') return; //проверка, тыкнули ли мы на td
-        if (target.innerHTML === "") {
-            target.innerHTML = "x";
-            check();
-            var chech_winner = check();
-            if (chech_winner) {
-                return;
-            } else {
-                bot_go();
-                check();
-                return;
-            }
+}
 
+var player1 = new Player('x');
+var player2 = new Player('o');
+var turn = new Turn(player1, player2);
+
+function initialization(){
+    let bot = document.getElementById('bot').checked;
+    player1.move = human_move;
+    player1.type_player = 'human';
+    if(bot){
+        player2.move = bot_move;
+        player2.type_player = 'bot';
+    }
+    else{
+        player2.move = human_move;
+        player2.type_player = 'human';
+    }
+    clear(all_td);
+}
+var human_move = function (event){
+    let target = event.target;
+    target.innerHTML = this.symbol;
+}
+
+var bot_move = function (event){
+    let move = possibility_win(player2.symbol);
+    if(move){
+        all_td[move].innerText = player2.symbol;
+    }else{
+        let check_human_win = possibility_win(player1.symbol);
+        if(check_human_win){
+            all_td[check_human_win].innerText = player2.symbol;
+        }
+        else{
+        get_random();
         }
     }
 }
 
-function start_two_man() {
-    for (var i = 0; i < clear_td.length; i++) {
-        clear_td[i].innerHTML = "";
-    }
-    kind_of_game = false;
-    document.getElementById('turn').style.display = 'none';
-    document.getElementById('kind_two').style.display = 'block';
-    document.getElementById('kind_one').style.display = 'none';
-    table.onclick = function (event) {
-        var target = event.target;
-        if (target.tagName != 'TD') return;
-        if (target.innerHTML === "") {
-            if (flag) {
-                target.innerHTML = "x";
-                flag = false;
-                check();
-                return;
+table.onclick = function(){
+    let target = event.target;
+    if (target.tagName != 'TD') return;
+    if (target.innerHTML === "") {
+        if(player2.type_player == 'human'){
+            turn.next().move(event);
+            check_win();
+        }else{
+            player1.move(event);
+            check_win();
+            if(!check_win() && player2.type_player != 'human'){
+                player2.move(event);
+                check_win();
             }
+        }
 
-            if (!flag) {
-                target.innerHTML = "o";
-                flag = true;
-                check();
-                return;
-            }
-        } else return;
     }
-}
+};
 
-function clear() {
-
-    for (var i = 0; i < clear_td.length; i++) {
-        clear_td[i].innerHTML = "";
-    }
+function clear(clear_object){
+    let count = clear_object.length;
+    for(var i=0; i< count; i++)
+        {
+          clear_object[i].innerHTML = '';
+        }
     for (var j = 0; j <= 7; j++) {
         document.getElementById('win' + j).style.display = "none";
     }
     document.getElementById('rezult').innerHTML = "";
-    document.getElementById('turn').style.display = "none";
-
-    if (kind_of_game) {
-        start_one_man();
-        document.getElementById('kind_one').style.display = "block";
-        document.getElementById('kind_two').style.display = "none";
-    } else if (!kind_of_game) {
-        start_two_man();
-        document.getElementById('kind_two').style.display = "block";
-        document.getElementById('kind_one').style.display = "none";
-    }
-    flag = true;
+    table.style.pointerEvents = 'auto';
 }
 
-function step_num() {
-    let arr = new Array();
-    let step = 0;
-    for (var r = 0, n = rows.length; r < n; r++) {
-        for (var c = 0, m = rows[r].cells.length; c < m; c++) {
-            arr.push(rows[r].cells[c].innerText);
-            if (rows[r].cells[c].innerText == '') {
-                step++;
-            }
-        }
+function check_win_code(array, position1, position2, return_position, symbol){
+   for (var i = 0; i < win_code.length; i++) {
+        if (array[win_code[i].charAt(position1)] === array[win_code[i].charAt(position2)] && array[win_code[i].charAt(position1)] === symbol && array[win_code[i].charAt(return_position)] === ''){
+            return win_code[i].charAt(return_position);
+           }
     }
-    return step;
+     return false;
+}
+
+function possibility_win(symbol){
+     let array_all_symbol = get_all_symbol();
+        let first_combination = check_win_code(array_all_symbol, 0, 1, 2, symbol);
+        if(first_combination){
+            return first_combination;
+        }
+        let second_combination = check_win_code(array_all_symbol, 0, 2, 1, symbol);
+        if(second_combination){
+            return second_combination;
+        }        
+        let third_combination = check_win_code(array_all_symbol, 1, 2, 0, symbol);
+        if(third_combination){
+            return third_combination;
+        }
+         return false;
 }
 
 function get_random() {
-    var rand = 0 + Math.random() * (2 + 1 - 0);
-    rand = Math.floor(rand);
-    var rand2 = 0 + Math.random() * (2 + 1 - 0);
-    rand2 = Math.floor(rand2);
-    if (rows[rand].cells[rand2].innerText == '') {
-        rows[rand].cells[rand2].innerText = 'o';
+    let rand = Math.round((Math.random() * (8 - 1) + 1));
+    if (all_td[rand].innerText == '') {
+        all_td[rand].innerText = player2.symbol;
         return;
     } else {
         get_random();
     }
 }
 
-
-function bot_win() {
-    for (var j = 0; j <= 2; j++) {
-        if (rows[j].cells[0].innerText == 'o' && rows[j].cells[1].innerText == 'o' || rows[j].cells[1].innerText == 'o' && rows[j].cells[2].innerText == 'o' || rows[j].cells[0].innerText == 'o' && rows[j].cells[2].innerText == 'o' || rows[0].cells[j].innerText == 'o' && rows[1].cells[j].innerText == 'o' || rows[1].cells[j].innerText == 'o' && rows[2].cells[j].innerText == 'o' || rows[0].cells[j].innerText == 'o' && rows[2].cells[j].innerText == 'o' || rows[0].cells[0].innerText == 'o' && rows[1].cells[1].innerText == 'o' || rows[1].cells[1].innerText == 'o' && rows[2].cells[2].innerText == 'o' || rows[0].cells[0].innerText == 'o' && rows[2].cells[2].innerText == 'o' || rows[0].cells[2].innerText == 'o' && rows[1].cells[1].innerText == 'o' || rows[1].cells[1].innerText == 'o' && rows[2].cells[0].innerText == 'o' || rows[0].cells[2].innerText == 'o' && rows[2].cells[0].innerText == 'o') {
-            if (rows[j].cells[0].innerText == 'o' && rows[j].cells[1].innerText == 'o' && rows[j].cells[2].innerText != 'x') {
-                rows[j].cells[2].innerText = 'o';
-                check();
-                bot_winner = false;
-                return;
-            } else if (rows[j].cells[1].innerText == 'o' && rows[j].cells[2].innerText == 'o' && rows[j].cells[0].innerText != 'x') {
-                rows[j].cells[0].innerText = 'o';
-                check();
-                bot_winner = false;
-                return;
-            } else if (rows[j].cells[0].innerText == 'o' && rows[j].cells[2].innerText == 'o' && rows[j].cells[1].innerText != 'x') {
-                rows[j].cells[1].innerText = 'o';
-                check();
-                bot_winner = false;
-                return;
-            } else if (rows[0].cells[j].innerText == 'o' && rows[1].cells[j].innerText == 'o' && rows[2].cells[j].innerText != 'x') {
-                rows[2].cells[j].innerText = 'o';
-                check();
-                bot_winner = false;
-                return;
-            } else if (rows[1].cells[j].innerText == 'o' && rows[2].cells[j].innerText == 'o' && rows[0].cells[j].innerText != 'x') {
-                rows[0].cells[j].innerText = 'o';
-                check();
-                bot_winner = false;
-                return;
-            } else if (rows[0].cells[j].innerText == 'o' && rows[2].cells[j].innerText == 'o' && rows[1].cells[j].innerText != 'x') {
-                rows[1].cells[j].innerText = 'o';
-                check();
-                bot_winner = false;
-                return;
-            } else if (rows[0].cells[0].innerText == 'o' && rows[1].cells[1].innerText == 'o' && rows[2].cells[2].innerText != 'x') {
-                rows[2].cells[2].innerText = 'o';
-                check();
-                bot_winner = false;
-                return;
-            } else if (rows[1].cells[1].innerText == 'o' && rows[2].cells[2].innerText == 'o' && rows[0].cells[0].innerText != 'x') {
-                rows[0].cells[0].innerText = 'o';
-                check();
-                bot_winner = false;
-                return;
-            } else if (rows[0].cells[0].innerText == 'o' && rows[2].cells[2].innerText == 'o' && rows[1].cells[1].innerText != 'x') {
-                rows[1].cells[1].innerText = 'o';
-                check();
-                bot_winner = false;
-                return;
-            } else if (rows[0].cells[2].innerText == 'o' && rows[1].cells[1].innerText == 'o' && rows[2].cells[0].innerText != 'x') {
-                rows[2].cells[0].innerText = 'o';
-                check();
-                bot_winner = false;
-                return;
-            } else if (rows[0].cells[2].innerText == 'o' && rows[2].cells[0].innerText == 'o' && rows[1].cells[1].innerText != 'x') {
-                rows[1].cells[1].innerText = 'o';
-                check();
-                bot_winner = false;
-                return;
-            } else if (rows[2].cells[0].innerText == 'o' && rows[1].cells[1].innerText == 'o' && rows[0].cells[2].innerText != 'x') {
-                rows[0].cells[2].innerText = 'o';
-                check();
-                bot_winner = false;
-                return;
-            }
-        } else {
-            bot_win_flag = false;
-            bot_winner = true;
-        }
+function get_all_symbol(){
+    let array_all_symbol = [];
+    let count = all_td.length;
+    for (var i = 0; i < count; i++) {
+        array_all_symbol.push(all_td[i].innerText);
     }
-
+    return array_all_symbol;
 }
 
-function bot_go() {
-    var step = step_num();
-    if (step == 8) {
-        get_random();
-    } else if (step > 1) {
-        bot_win();
-        if (bot_winner == true) {
-            if (!bot_win_flag) {
-                for (var j = 0; j <= 2; j++) {
-                    if (rows[j].cells[0].innerText == 'x' && rows[j].cells[1].innerText == 'x' || rows[j].cells[1].innerText == 'x' && rows[j].cells[2].innerText == 'x' || rows[j].cells[0].innerText == 'x' && rows[j].cells[2].innerText == 'x' || rows[0].cells[j].innerText == 'x' && rows[1].cells[j].innerText == 'x' || rows[1].cells[j].innerText == 'x' && rows[2].cells[j].innerText == 'x' || rows[0].cells[j].innerText == 'x' && rows[2].cells[j].innerText == 'x' || rows[0].cells[0].innerText == 'x' && rows[1].cells[1].innerText == 'x' || rows[1].cells[1].innerText == 'x' && rows[2].cells[2].innerText == 'x' || rows[0].cells[0].innerText == 'x' && rows[2].cells[2].innerText == 'x' || rows[0].cells[2].innerText == 'x' && rows[1].cells[1].innerText == 'x' || rows[1].cells[1].innerText == 'x' && rows[2].cells[0].innerText == 'x' || rows[0].cells[2].innerText == 'x' && rows[2].cells[0].innerText == 'x') {
-                        if (rows[j].cells[0].innerText == 'x' && rows[j].cells[1].innerText == 'x' && rows[j].cells[2].innerText != 'o') {
-                            rows[j].cells[2].innerText = 'o';
-                            return;
-                        } else if (rows[j].cells[1].innerText == 'x' && rows[j].cells[2].innerText == 'x' && rows[j].cells[0].innerText != 'o') {
-                            rows[j].cells[0].innerText = 'o';
-                            return;
-                        } else if (rows[j].cells[0].innerText == 'x' && rows[j].cells[2].innerText == 'x' && rows[j].cells[1].innerText != 'o') {
-                            rows[j].cells[1].innerText = 'o';
-                            return;
-                        } else if (rows[0].cells[j].innerText == 'x' && rows[1].cells[j].innerText == 'x' && rows[2].cells[j].innerText != 'o') {
-                            rows[2].cells[j].innerText = 'o';
-                            return;
-                        } else if (rows[1].cells[j].innerText == 'x' && rows[2].cells[j].innerText == 'x' && rows[0].cells[j].innerText != 'o') {
-                            rows[0].cells[j].innerText = 'o';
-                            return;
-                        } else if (rows[0].cells[j].innerText == 'x' && rows[2].cells[j].innerText == 'x' && rows[1].cells[j].innerText != 'o') {
-                            rows[1].cells[j].innerText = 'o';
-                            return;
-                        } else if (rows[0].cells[0].innerText == 'x' && rows[1].cells[1].innerText == 'x' && rows[2].cells[2].innerText != 'o') {
-                            rows[2].cells[2].innerText = 'o';
-                            return;
-                        } else if (rows[1].cells[1].innerText == 'x' && rows[2].cells[2].innerText == 'x' && rows[0].cells[0].innerText != 'o') {
-                            rows[0].cells[0].innerText = 'o';
-                            return;
-                        } else if (rows[0].cells[0].innerText == 'x' && rows[2].cells[2].innerText == 'x' && rows[1].cells[1].innerText != 'o') {
-                            rows[1].cells[1].innerText = 'o';
-                            return;
-                        } else if (rows[0].cells[2].innerText == 'x' && rows[1].cells[1].innerText == 'x' && rows[2].cells[0].innerText != 'o') {
-                            rows[2].cells[0].innerText = 'o';
-                            return;
-                        } else if (rows[0].cells[2].innerText == 'x' && rows[2].cells[0].innerText == 'x' && rows[1].cells[1].innerText != 'o') {
-                            rows[1].cells[1].innerText = 'o';
-                            return;
-                        } else if (rows[2].cells[0].innerText == 'x' && rows[1].cells[1].innerText == 'x' && rows[0].cells[2].innerText != 'o') {
-                            rows[0].cells[2].innerText = 'o';
-                            return;
-                        }
-                    }
-                }
-                get_random();
-                return;
-
-            } else return;
-
-        }
-    } else if (step == 0) {
-        document.getElementById('rezult').style = "margin-left: 190px;";
-        document.getElementById('rezult').innerHTML = "Ничья :)";
-    }
-}
-
-function check() {
+function check_win() {
     let winner = "Победили ";
-    let arr = new Array();
-
-    for (var r = 0, n = rows.length; r < n; r++) {
-
-        for (var c = 0, m = rows[r].cells.length; c < m; c++) {
-            arr.push(rows[r].cells[c].innerText);
-        }
-    }
-    for (var i = 0; i < win_cod.length; i++) {
-        if (arr[win_cod[i].charAt(0)] === arr[win_cod[i].charAt(1)] && arr[win_cod[i].charAt(1)] === arr[win_cod[i].charAt(2)] && arr[win_cod[i].charAt(0)] != '') {
-            document.getElementById('rezult').innerText = winner + " " + arr[win_cod[i].charAt(0)];
+    let arr = get_all_symbol();
+    let count = win_code.length;
+    for (var i = 0; i < count; i++) {
+        if (arr[win_code[i].charAt(0)] === arr[win_code[i].charAt(1)] && arr[win_code[i].charAt(1)] === arr[win_code[i].charAt(2)] && arr[win_code[i].charAt(0)] != '') {
+            document.getElementById('rezult').innerText = winner + " " + arr[win_code[i].charAt(0)];
             document.getElementById('win' + i).style.display = "block";
-            table.onclick = function () {
-                return false;
-            };
+            table.style.pointerEvents = 'none';
             return true;
         } else {
             var counter = 0;
-            for (var j = 0; j < clear_td.length; j++) {
-                if (clear_td[j].textContent != "") {
+            for (var j = 0; j < all_td.length; j++) {
+                if (all_td[j].textContent != "") {
                     counter++;
                     if (counter === 9) {
                         document.getElementById('rezult').style = "margin-left: 190px;";
                         document.getElementById('rezult').innerHTML = "Ничья :)";
+                        return true;
                     }
                 }
             }
         }
     }
 }
-
-btn.addEventListener('click', clear);
+document.addEventListener("DOMContentLoaded",  initialization());
+bot.addEventListener('click',  function() {initialization()}, false);
+btn.addEventListener('click',  function() {clear(all_td)}, false);

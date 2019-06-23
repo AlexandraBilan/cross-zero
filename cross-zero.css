@@ -164,3 +164,11 @@ button {
     left: 95px;
     top: 155px;
 }
+.x::after{
+    content: 'x';
+    color: blue;
+}
+.o::after{
+    content: 'o';
+    color: red;
+}

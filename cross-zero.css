@@ -3,41 +3,32 @@
     src: local("Scriptorama"),
     url(11535.ttf);
 }
-
 body {
     background: url(bg-cross.jpg);
     margin: 0;
     padding: 0;
     font-family: SouthPark_Cyr;
 }
-
 h1 {
-    display: inline-block;
-    margin-left: 80px;
-    position: relative;
-    left: 25%;
-}
-
-.container {
-    width: 400px;
-    position: relative;
-    left: 25%;
     text-align: center;
+    margin: 100px 0;
 }
-
+.wrapper {
+    position: relative;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    max-width: 800px;
+    margin: 0 auto;
+}
+.table_block{
+    position: relative;
+    width: fit-content;
+    margin: auto;
+}
 table {
     color: #0031ff;
-    position: absolute;
-    left: 150px;
-    top: 75px;
 }
-
-.kind {
-    position: relative;
-    left: 55px;
-    display: none;
-}
-
 table tr,
 table td {
     width: 50px;
@@ -47,128 +38,100 @@ table td {
     text-align: center;
     cursor: pointer;
 }
-
-.line {
+.line, .line_win {
     position: absolute;
 }
-
 .line1 {
-    left: 150px;
-    top: 125px;
+    top: 26%;
 }
-
 .line2 {
-    left: 145px;
-    top: 184px;
+    top: 58%;
 }
-
 .line3 {
-    left: 199px;
-    top: 72px;
+    left: 26%;
+    top: 0;
 }
-
 .line4 {
-    left: 260px;
-    top: 75px;
+    left: 59%;
+    top: 0;
 }
-
 #btn {
-    position: absolute;
-    top: 300px;
     padding: 10px;
-    font-family: SouthPark_Cyr;
-    left: 185px;
+    font-family: inherit;
+    border: 1px solid #000;
+    margin: 25px auto;
+    display: block;
+    cursor: pointer;
+    outline: none;
 }
-
-button {
-    font-family: SouthPark_Cyr;
-    padding: 10px;
-}
-
-.choice {
+.choice_block {
     font-size: 1.5em;
     width: 250px;
-    position: relative;
     text-align: center;
-    top: 110px;
-    left: 5%;
 }
-
-#turn {
-    display: none;
-    position: absolute;
-    left: 160px;
+.choice_block input{
+    display: block;
+    margin: auto;
+    width: 20px;
+    height: 20px;
 }
-
 #rezult {
     font-size: 20px;
-    margin-left: 180px;
-    position: absolute;
-    top: 350px;
+    text-align: center;
 }
-
-#win1,
-#win2,
-#win3,
-#win4,
-#win5,
-#win6,
-#win7,
-#win8,
+.line_win{
+    width: 100%;
+}
 #win0 {
-    position: absolute;
-    display: none;
+    top: 15%;
 }
-
-#win0 {
-    left: 125px;
-    top: 95px;
-}
-
 #win1 {
-    left: 125px;
-    top: 155px;
+    top: 46%;
 }
-
 #win2 {
-    left: 125px;
-    top: 215px;
+    top: 80%;
 }
-
 #win3 {
     transform: rotate(90deg);
-    top: 140px;
-    left: 76px;
+    top: 50%;
+    left: -32%;
 }
-
-#win4 {
+#win4{
     transform: rotate(90deg);
-    top: 140px;
-    left: 130px;
+    top: 50%;
+    left: 0;
 }
-
-#win5 {
+#win5{
     transform: rotate(90deg);
-    top: 140px;
-    left: 190px;
+    top: 50%;
+    left: 30%;
 }
-
-#win6 {
+#win6{
     transform: rotate(45deg);
-    left: 105px;
-    top: 155px;
+    left: 0;
+    top: 50%;
 }
-
-#win7 {
+#win7{
     transform: rotate(132deg);
-    left: 95px;
-    top: 155px;
+    left: 0;
+    top: 50%;
 }
-.x::after{
-    content: 'x';
-    color: blue;
-}
-.o::after{
-    content: 'o';
-    color: red;
+@media screen and (max-width: 500px) {
+    h1 {
+        margin: 33px 0;
+        font-size: 6vw;
+    }
+    .wrapper{
+        display: block;
+        margin: 0 15px;
+    }
+    .choice_block {
+         font-size: 5vw;
+        width: unset;
+        margin-bottom: 27px;
+    }
+    #rezult {
+        font-size: 5vw;
+        text-align: center;
+    }
 }

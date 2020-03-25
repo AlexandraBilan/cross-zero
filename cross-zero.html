@@ -1,59 +1,61 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Document</title>
     <link rel="stylesheet" href="cross-zero.css">
-
     <script src="cross-zero.js" defer></script>
 </head>
 
 <body>
 
     <h1>Крестики-нолики</h1>
-    <div class="container">
-        <p class="kind" id="kind_one">Режим игры: против компьютера.</p>
-        <p class="kind" id="kind_two">Режим игры: двое игроков.</p>
-        <p id="turn">Вы ходите первым!</p>
-        <table id="table">
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-        </table>
-        <img src="LineG.gif" alt="" class="line1 line">
-        <img src="LineG2.gif" alt="" class="line2 line">
-        <img src="LineV.gif" alt="" class="line3 line">
-        <img src="LineV.gif" alt="" class="line4 line">
+    <div class="wrapper">
+        <div class="choice_block">
+            <p>Активировать режим игры против компьютера?</p>
+                <input type="checkbox" id='bot'>
+        </div>
+        <div class="table_rezult_block">
+            <div class="table_block">
+                <table id="table">
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </table>
+                <img src="LineG.gif" alt="Граница таблицы" class="line1 line">
+                <img src="LineG.gif" alt="Граница таблицы" class="line2 line">
+                <img src="LineV.gif" alt="Граница таблицы" class="line3 line">
+                <img src="LineV.gif" alt="Граница таблицы" class="line4 line">
 
-        <img src="win2.gif" alt="" id="win0">
-        <img src="win2.gif" alt="" id="win1">
-        <img src="win2.gif" alt="" id="win2">
-        <img src="win2.gif" alt="" id="win3">
-        <img src="win2.gif" alt="" id="win4">
-        <img src="win2.gif" alt="" id="win5">
-        <img src="win1.gif" alt="" id="win6">
-        <img src="win1.gif" alt="" id="win7">
-        <input type="button" value="Начать заново!" id="btn">
-        <p id="rezult"></p>
-    </div>
-    <div class="choice">
-    <p>Активировать режим игры против компьютера?</p>
-    <input type="checkbox" id='bot'>
+                <img src="win2.gif" alt="Победная линия" id="win0" class="line_win">
+                <img src="win2.gif" alt="Победная линия" id="win1" class="line_win">
+                <img src="win2.gif" alt="Победная линия" id="win2" class="line_win">
+                <img src="win2.gif" alt="Победная линия" id="win3" class="line_win">
+                <img src="win2.gif" alt="Победная линия" id="win4" class="line_win">
+                <img src="win2.gif" alt="Победная линия" id="win5" class="line_win">
+                <img src="win1.gif" alt="Победная линия" id="win6" class="line_win">
+                <img src="win1.gif" alt="Победная линия" id="win7" class="line_win">
+            </div>
 
+            <input type="button" value="Начать заново!" id="btn">
+            <p id="rezult"></p>
+        </div>
     </div>
+
 </body>
 
 </html>

@@ -14,8 +14,7 @@ function Turn(player1, player2){
     this.player2 = player2;
     let current_player = '';
     this.next = function() {
-        if(current_player == '' || current_player == this.player2)
-        {
+        if(current_player == '' || current_player == this.player2) {
             current_player = this.player1;
         }
         else if(current_player == this.player1){
@@ -47,7 +46,6 @@ var human_move = function (event){
     let target = event.target;
     target.innerHTML = this.symbol;
 }
-
 var bot_move = function (event){
     let move = possibility_win(player2.symbol);
     if(move){
@@ -156,7 +154,6 @@ function check_win() {
                 if (all_td[j].textContent != "") {
                     counter++;
                     if (counter === 9) {
-                        document.getElementById('rezult').style = "margin-left: 190px;";
                         document.getElementById('rezult').innerHTML = "Ничья :)";
                         return true;
                     }
